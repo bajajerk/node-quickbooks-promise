@@ -3,7 +3,7 @@ const { promisify } = require("util")
 * Quickbooks integration class from node-quickbooks
 * @class
 */
-const QuickBooks = require("@raydeck/node-quickbooks")
+const QuickBooks = require("node-quickbooks")
 //#region Conversion of methods to Old
 QuickBooks.prototype.refreshAccessTokenOld = QuickBooks.prototype.refreshAccessToken
 QuickBooks.prototype.revokeAccessOld = QuickBooks.prototype.revokeAccess
