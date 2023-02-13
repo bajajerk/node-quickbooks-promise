@@ -1,7 +1,7 @@
 const { readFileSync, writeFileSync } = require("fs");
 const { join, resolve } = require("path");
 const js2md = require("jsdoc-to-markdown");
-const qbPath = require.resolve("@raydeck/node-quickbooks");
+const qbPath = require.resolve("node-quickbooks")
 const mustache = require("mustache");
 const text = readFileSync(qbPath, {
   encoding: "UTF8"

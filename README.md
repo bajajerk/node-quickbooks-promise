@@ -64,8 +64,10 @@ npm i s node-quickbooks-promise
     * [.getBillPayment](#QuickBooks+getBillPayment)
     * [.getClass](#QuickBooks+getClass)
     * [.getCompanyInfo](#QuickBooks+getCompanyInfo)
+    * [.getCompanyCurrency](#QuickBooks+getCompanyCurrency)
     * [.getCreditMemo](#QuickBooks+getCreditMemo)
     * [.getCustomer](#QuickBooks+getCustomer)
+    * [.getCustomerType](#QuickBooks+getCustomerType)
     * [.getDepartment](#QuickBooks+getDepartment)
     * [.getDeposit](#QuickBooks+getDeposit)
     * [.getEmployee](#QuickBooks+getEmployee)
@@ -76,6 +78,9 @@ npm i s node-quickbooks-promise
     * [.getInvoice](#QuickBooks+getInvoice)
     * [.getInvoicePdf](#QuickBooks+getInvoicePdf)
     * [.sendInvoicePdf](#QuickBooks+sendInvoicePdf)
+    * [.getCreditMemoPdf](#QuickBooks+getCreditMemoPdf)
+    * [.sendCreditMemoPdf](#QuickBooks+sendCreditMemoPdf)
+    * [.sendPurchaseOrder](#QuickBooks+sendPurchaseOrder)
     * [.getItem](#QuickBooks+getItem)
     * [.getJournalCode](#QuickBooks+getJournalCode)
     * [.getJournalEntry](#QuickBooks+getJournalEntry)
@@ -155,8 +160,10 @@ npm i s node-quickbooks-promise
     * [.findBudgets](#QuickBooks+findBudgets)
     * [.findClasses](#QuickBooks+findClasses)
     * [.findCompanyInfos](#QuickBooks+findCompanyInfos)
+    * [.findCompanyCurrencies](#QuickBooks+findCompanyCurrencies)
     * [.findCreditMemos](#QuickBooks+findCreditMemos)
     * [.findCustomers](#QuickBooks+findCustomers)
+    * [.findCustomerTypes](#QuickBooks+findCustomerTypes)
     * [.findDepartments](#QuickBooks+findDepartments)
     * [.findDeposits](#QuickBooks+findDeposits)
     * [.findEmployees](#QuickBooks+findEmployees)
@@ -185,6 +192,7 @@ npm i s node-quickbooks-promise
     * [.reportProfitAndLoss](#QuickBooks+reportProfitAndLoss)
     * [.reportProfitAndLossDetail](#QuickBooks+reportProfitAndLossDetail)
     * [.reportTrialBalance](#QuickBooks+reportTrialBalance)
+    * [.reportTrialBalanceFR](#QuickBooks+reportTrialBalanceFR)
     * [.reportCashFlow](#QuickBooks+reportCashFlow)
     * [.reportInventoryValuationSummary](#QuickBooks+reportInventoryValuationSummary)
     * [.reportCustomerSales](#QuickBooks+reportCustomerSales)
@@ -205,6 +213,7 @@ npm i s node-quickbooks-promise
     * [.reportDepartmentSales](#QuickBooks+reportDepartmentSales)
     * [.reportClassSales](#QuickBooks+reportClassSales)
     * [.reportAccountListDetail](#QuickBooks+reportAccountListDetail)
+    * [.reportJournalReport](#QuickBooks+reportJournalReport)
 
 <a name="new_QuickBooks_new"></a>
 
@@ -237,7 +246,7 @@ The following batch items are supported:
      update
      delete
      query
-The maximum number of batch items in a single request is 25.
+The maximum number of batch items in a single request is 30.
 
 **Kind**: instance property of [<code>QuickBooks</code>](#QuickBooks)  
 
@@ -647,6 +656,17 @@ Retrieves the CompanyInfo from QuickBooks
 | --- | --- | --- |
 | Id | <code>string</code> | The Id of persistent CompanyInfo |
 
+<a name="QuickBooks+getCompanyCurrency"></a>
+
+### quickBooks.getCompanyCurrency
+Retrieves the CompanyCurrency from QuickBooks
+
+**Kind**: instance property of [<code>QuickBooks</code>](#QuickBooks)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| Id | <code>string</code> | The Id of persistent CompanyCurrency |
+
 <a name="QuickBooks+getCreditMemo"></a>
 
 ### quickBooks.getCreditMemo
@@ -668,6 +688,17 @@ Retrieves the Customer from QuickBooks
 | Param | Type | Description |
 | --- | --- | --- |
 | Id | <code>string</code> | The Id of persistent Customer |
+
+<a name="QuickBooks+getCustomerType"></a>
+
+### quickBooks.getCustomerType
+Retrieves the CustomerType from QuickBooks
+
+**Kind**: instance property of [<code>QuickBooks</code>](#QuickBooks)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| Id | <code>string</code> | The Id of persistent CustomerType |
 
 <a name="QuickBooks+getDepartment"></a>
 
@@ -782,6 +813,43 @@ or the specified 'sendTo' address
 | --- | --- | --- |
 | Id | <code>string</code> | The Id of persistent Invoice |
 | sendTo | <code>string</code> | optional email address to send the PDF to. If not provided, address supplied in Invoice.BillEmail.EmailAddress will be used |
+
+<a name="QuickBooks+getCreditMemoPdf"></a>
+
+### quickBooks.getCreditMemoPdf
+Retrieves the Credit Memo PDF from QuickBooks
+
+**Kind**: instance property of [<code>QuickBooks</code>](#QuickBooks)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| Id | <code>string</code> | The Id of persistent Credit Memo |
+
+<a name="QuickBooks+sendCreditMemoPdf"></a>
+
+### quickBooks.sendCreditMemoPdf
+Emails the Credit Memo PDF from QuickBooks to the address supplied in CreditMemo.BillEmail.EmailAddress
+or the specified 'sendTo' address
+
+**Kind**: instance property of [<code>QuickBooks</code>](#QuickBooks)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| Id | <code>string</code> | The Id of persistent Credit Memo |
+| sendTo | <code>string</code> | optional email address to send the PDF to. If not provided, address supplied in CreditMemo.BillEmail.EmailAddress will be used |
+
+<a name="QuickBooks+sendPurchaseOrder"></a>
+
+### quickBooks.sendPurchaseOrder
+Emails the Purchase Order from QuickBooks to the address supplied in PurchaseOrder.POEmail.Address
+or the specified 'sendTo' address
+
+**Kind**: instance property of [<code>QuickBooks</code>](#QuickBooks)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| Id | <code>string</code> | The Id of persistent Purchase Order |
+| sendTo | <code>string</code> | optional email address to send the PDF to. If not provided, address supplied in PurchaseOrder.POEmail.Address will be used |
 
 <a name="QuickBooks+getItem"></a>
 
@@ -1649,6 +1717,17 @@ Finds all CompanyInfos in QuickBooks, optionally matching the specified criteria
 | --- | --- | --- |
 | criteria | <code>object</code> | (Optional) String or single-valued map converted to a where clause of the form "where key = 'value'" |
 
+<a name="QuickBooks+findCompanyCurrencies"></a>
+
+### quickBooks.findCompanyCurrencies
+Finds all CompanyCurrencies in QuickBooks, optionally matching the specified criteria
+
+**Kind**: instance property of [<code>QuickBooks</code>](#QuickBooks)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| criteria | <code>object</code> | (Optional) String or single-valued map converted to a where clause of the form "where key = 'value'" |
+
 <a name="QuickBooks+findCreditMemos"></a>
 
 ### quickBooks.findCreditMemos
@@ -1664,6 +1743,17 @@ Finds all CreditMemos in QuickBooks, optionally matching the specified criteria
 
 ### quickBooks.findCustomers
 Finds all Customers in QuickBooks, optionally matching the specified criteria
+
+**Kind**: instance property of [<code>QuickBooks</code>](#QuickBooks)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| criteria | <code>object</code> | (Optional) String or single-valued map converted to a where clause of the form "where key = 'value'" |
+
+<a name="QuickBooks+findCustomerTypes"></a>
+
+### quickBooks.findCustomerTypes
+Finds all CustomerTypes in QuickBooks, optionally matching the specified criteria
 
 **Kind**: instance property of [<code>QuickBooks</code>](#QuickBooks)  
 
@@ -1979,6 +2069,17 @@ Retrieves the TrialBalance Report from QuickBooks
 | --- | --- | --- |
 | options | <code>object</code> | (Optional) Map of key-value pairs passed as options to the Report |
 
+<a name="QuickBooks+reportTrialBalanceFR"></a>
+
+### quickBooks.reportTrialBalanceFR
+Retrieves the TrialBalanceFR Report from QuickBooks
+
+**Kind**: instance property of [<code>QuickBooks</code>](#QuickBooks)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| options | <code>object</code> | (Optional) Map of key-value pairs passed as options to the Report |
+
 <a name="QuickBooks+reportCashFlow"></a>
 
 ### quickBooks.reportCashFlow
@@ -2192,6 +2293,17 @@ Retrieves the ClassSales Report from QuickBooks
 
 ### quickBooks.reportAccountListDetail
 Retrieves the AccountListDetail Report from QuickBooks
+
+**Kind**: instance property of [<code>QuickBooks</code>](#QuickBooks)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| options | <code>object</code> | (Optional) Map of key-value pairs passed as options to the Report |
+
+<a name="QuickBooks+reportJournalReport"></a>
+
+### quickBooks.reportJournalReport
+Retrieves the JournalReport Report from QuickBooks
 
 **Kind**: instance property of [<code>QuickBooks</code>](#QuickBooks)  
 

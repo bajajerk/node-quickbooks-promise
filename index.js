@@ -3,13 +3,14 @@ const { promisify } = require("util")
 * Quickbooks integration class from node-quickbooks
 * @class
 */
-const QuickBooks = require("node-quickbooks")
+const QuickBooks = require("@raydeck/node-quickbooks")
 //#region Conversion of methods to Old
 QuickBooks.prototype.refreshAccessTokenOld = QuickBooks.prototype.refreshAccessToken
 QuickBooks.prototype.revokeAccessOld = QuickBooks.prototype.revokeAccess
 QuickBooks.prototype.getUserInfoOld = QuickBooks.prototype.getUserInfo
 QuickBooks.prototype.batchOld = QuickBooks.prototype.batch
 QuickBooks.prototype.changeDataCaptureOld = QuickBooks.prototype.changeDataCapture
+QuickBooks.prototype.uploadOld = QuickBooks.prototype.upload
 QuickBooks.prototype.createAccountOld = QuickBooks.prototype.createAccount
 QuickBooks.prototype.createAttachableOld = QuickBooks.prototype.createAttachable
 QuickBooks.prototype.createBillOld = QuickBooks.prototype.createBill
@@ -44,8 +45,10 @@ QuickBooks.prototype.getBillOld = QuickBooks.prototype.getBill
 QuickBooks.prototype.getBillPaymentOld = QuickBooks.prototype.getBillPayment
 QuickBooks.prototype.getClassOld = QuickBooks.prototype.getClass
 QuickBooks.prototype.getCompanyInfoOld = QuickBooks.prototype.getCompanyInfo
+QuickBooks.prototype.getCompanyCurrencyOld = QuickBooks.prototype.getCompanyCurrency
 QuickBooks.prototype.getCreditMemoOld = QuickBooks.prototype.getCreditMemo
 QuickBooks.prototype.getCustomerOld = QuickBooks.prototype.getCustomer
+QuickBooks.prototype.getCustomerTypeOld = QuickBooks.prototype.getCustomerType
 QuickBooks.prototype.getDepartmentOld = QuickBooks.prototype.getDepartment
 QuickBooks.prototype.getDepositOld = QuickBooks.prototype.getDeposit
 QuickBooks.prototype.getEmployeeOld = QuickBooks.prototype.getEmployee
@@ -56,6 +59,9 @@ QuickBooks.prototype.sendEstimatePdfOld = QuickBooks.prototype.sendEstimatePdf
 QuickBooks.prototype.getInvoiceOld = QuickBooks.prototype.getInvoice
 QuickBooks.prototype.getInvoicePdfOld = QuickBooks.prototype.getInvoicePdf
 QuickBooks.prototype.sendInvoicePdfOld = QuickBooks.prototype.sendInvoicePdf
+QuickBooks.prototype.getCreditMemoPdfOld = QuickBooks.prototype.getCreditMemoPdf
+QuickBooks.prototype.sendCreditMemoPdfOld = QuickBooks.prototype.sendCreditMemoPdf
+QuickBooks.prototype.sendPurchaseOrderOld = QuickBooks.prototype.sendPurchaseOrder
 QuickBooks.prototype.getItemOld = QuickBooks.prototype.getItem
 QuickBooks.prototype.getJournalCodeOld = QuickBooks.prototype.getJournalCode
 QuickBooks.prototype.getJournalEntryOld = QuickBooks.prototype.getJournalEntry
@@ -135,8 +141,10 @@ QuickBooks.prototype.findBillPaymentsOld = QuickBooks.prototype.findBillPayments
 QuickBooks.prototype.findBudgetsOld = QuickBooks.prototype.findBudgets
 QuickBooks.prototype.findClassesOld = QuickBooks.prototype.findClasses
 QuickBooks.prototype.findCompanyInfosOld = QuickBooks.prototype.findCompanyInfos
+QuickBooks.prototype.findCompanyCurrenciesOld = QuickBooks.prototype.findCompanyCurrencies
 QuickBooks.prototype.findCreditMemosOld = QuickBooks.prototype.findCreditMemos
 QuickBooks.prototype.findCustomersOld = QuickBooks.prototype.findCustomers
+QuickBooks.prototype.findCustomerTypesOld = QuickBooks.prototype.findCustomerTypes
 QuickBooks.prototype.findDepartmentsOld = QuickBooks.prototype.findDepartments
 QuickBooks.prototype.findDepositsOld = QuickBooks.prototype.findDeposits
 QuickBooks.prototype.findEmployeesOld = QuickBooks.prototype.findEmployees
@@ -165,7 +173,9 @@ QuickBooks.prototype.reportBalanceSheetOld = QuickBooks.prototype.reportBalanceS
 QuickBooks.prototype.reportProfitAndLossOld = QuickBooks.prototype.reportProfitAndLoss
 QuickBooks.prototype.reportProfitAndLossDetailOld = QuickBooks.prototype.reportProfitAndLossDetail
 QuickBooks.prototype.reportTrialBalanceOld = QuickBooks.prototype.reportTrialBalance
+QuickBooks.prototype.reportTrialBalanceFROld = QuickBooks.prototype.reportTrialBalanceFR
 QuickBooks.prototype.reportCashFlowOld = QuickBooks.prototype.reportCashFlow
+QuickBooks.prototype.reportInventoryValuationSummaryOld = QuickBooks.prototype.reportInventoryValuationSummary
 QuickBooks.prototype.reportCustomerSalesOld = QuickBooks.prototype.reportCustomerSales
 QuickBooks.prototype.reportItemSalesOld = QuickBooks.prototype.reportItemSales
 QuickBooks.prototype.reportCustomerIncomeOld = QuickBooks.prototype.reportCustomerIncome
@@ -184,6 +194,7 @@ QuickBooks.prototype.reportTaxSummaryOld = QuickBooks.prototype.reportTaxSummary
 QuickBooks.prototype.reportDepartmentSalesOld = QuickBooks.prototype.reportDepartmentSales
 QuickBooks.prototype.reportClassSalesOld = QuickBooks.prototype.reportClassSales
 QuickBooks.prototype.reportAccountListDetailOld = QuickBooks.prototype.reportAccountListDetail
+QuickBooks.prototype.reportJournalReportOld = QuickBooks.prototype.reportJournalReport
 QuickBooks.prototype.reconnectOld = QuickBooks.prototype.reconnect
 QuickBooks.prototype.disconnectOld = QuickBooks.prototype.disconnect
 //#endregion
@@ -212,7 +223,7 @@ QuickBooks.prototype.getUserInfo = promisify(QuickBooks.prototype.getUserInfoOld
      update
      delete
      query
- * The maximum number of batch items in a single request is 25.
+ * The maximum number of batch items in a single request is 30.
  *
  * @param  {object} items - JavaScript array of batch items
  */
@@ -225,6 +236,18 @@ QuickBooks.prototype.batch = promisify(QuickBooks.prototype.batchOld)
  * @param  {object} since - JavaScript Date or string representation of the form '2012-07-20T22:25:51-07:00' to look back for changes until
  */
 QuickBooks.prototype.changeDataCapture = promisify(QuickBooks.prototype.changeDataCaptureOld)
+
+/**
+ * Uploads a file as an Attachable in QBO, optionally linking it to the specified
+ * QBO Entity.
+ *
+ * @param  {string} filename - the name of the file
+ * @param  {string} contentType - the mime type of the file
+ * @param  {object} stream - ReadableStream of file contents
+ * @param  {object} entityType - optional string name of the QBO entity the Attachable will be linked to (e.g. Invoice)
+ * @param  {object} entityId - optional Id of the QBO entity the Attachable will be linked to
+ */
+QuickBooks.prototype.upload = promisify(QuickBooks.prototype.uploadOld)
 
 /**
  * Creates the Account in QuickBooks
@@ -465,6 +488,13 @@ QuickBooks.prototype.getClass = promisify(QuickBooks.prototype.getClassOld)
 QuickBooks.prototype.getCompanyInfo = promisify(QuickBooks.prototype.getCompanyInfoOld)
 
 /**
+ * Retrieves the CompanyCurrency from QuickBooks
+ *
+ * @param  {string} Id - The Id of persistent CompanyCurrency
+ */
+QuickBooks.prototype.getCompanyCurrency = promisify(QuickBooks.prototype.getCompanyCurrencyOld)
+
+/**
  * Retrieves the CreditMemo from QuickBooks
  *
  * @param  {string} Id - The Id of persistent CreditMemo
@@ -477,6 +507,13 @@ QuickBooks.prototype.getCreditMemo = promisify(QuickBooks.prototype.getCreditMem
  * @param  {string} Id - The Id of persistent Customer
  */
 QuickBooks.prototype.getCustomer = promisify(QuickBooks.prototype.getCustomerOld)
+
+/**
+ * Retrieves the CustomerType from QuickBooks
+ *
+ * @param  {string} Id - The Id of persistent CustomerType
+ */
+QuickBooks.prototype.getCustomerType = promisify(QuickBooks.prototype.getCustomerTypeOld)
 
 /**
  * Retrieves the Department from QuickBooks
@@ -551,6 +588,31 @@ QuickBooks.prototype.getInvoicePdf = promisify(QuickBooks.prototype.getInvoicePd
  * @param  {string} sendTo - optional email address to send the PDF to. If not provided, address supplied in Invoice.BillEmail.EmailAddress will be used
  */
 QuickBooks.prototype.sendInvoicePdf = promisify(QuickBooks.prototype.sendInvoicePdfOld)
+
+/**
+ * Retrieves the Credit Memo PDF from QuickBooks
+ *
+ * @param  {string} Id - The Id of persistent Credit Memo
+ */
+QuickBooks.prototype.getCreditMemoPdf = promisify(QuickBooks.prototype.getCreditMemoPdfOld)
+
+/**
+ * Emails the Credit Memo PDF from QuickBooks to the address supplied in CreditMemo.BillEmail.EmailAddress
+ * or the specified 'sendTo' address
+ *
+ * @param  {string} Id - The Id of persistent Credit Memo
+ * @param  {string} sendTo - optional email address to send the PDF to. If not provided, address supplied in CreditMemo.BillEmail.EmailAddress will be used
+ */
+QuickBooks.prototype.sendCreditMemoPdf = promisify(QuickBooks.prototype.sendCreditMemoPdfOld)
+
+/**
+ * Emails the Purchase Order from QuickBooks to the address supplied in PurchaseOrder.POEmail.Address
+ * or the specified 'sendTo' address
+ *
+ * @param  {string} Id - The Id of persistent Purchase Order
+ * @param  {string} sendTo - optional email address to send the PDF to. If not provided, address supplied in PurchaseOrder.POEmail.Address will be used
+ */
+QuickBooks.prototype.sendPurchaseOrder = promisify(QuickBooks.prototype.sendPurchaseOrderOld)
 
 /**
  * Retrieves the Item from QuickBooks
@@ -1107,6 +1169,13 @@ QuickBooks.prototype.findClasses = promisify(QuickBooks.prototype.findClassesOld
 QuickBooks.prototype.findCompanyInfos = promisify(QuickBooks.prototype.findCompanyInfosOld)
 
 /**
+ * Finds all CompanyCurrencies in QuickBooks, optionally matching the specified criteria
+ *
+ * @param  {object} criteria - (Optional) String or single-valued map converted to a where clause of the form "where key = 'value'"
+ */
+QuickBooks.prototype.findCompanyCurrencies = promisify(QuickBooks.prototype.findCompanyCurrenciesOld)
+
+/**
  * Finds all CreditMemos in QuickBooks, optionally matching the specified criteria
  *
  * @param  {object} criteria - (Optional) String or single-valued map converted to a where clause of the form "where key = 'value'"
@@ -1119,6 +1188,13 @@ QuickBooks.prototype.findCreditMemos = promisify(QuickBooks.prototype.findCredit
  * @param  {object} criteria - (Optional) String or single-valued map converted to a where clause of the form "where key = 'value'"
  */
 QuickBooks.prototype.findCustomers = promisify(QuickBooks.prototype.findCustomersOld)
+
+/**
+ * Finds all CustomerTypes in QuickBooks, optionally matching the specified criteria
+ *
+ * @param  {object} criteria - (Optional) String or single-valued map converted to a where clause of the form "where key = 'value'"
+ */
+QuickBooks.prototype.findCustomerTypes = promisify(QuickBooks.prototype.findCustomerTypesOld)
 
 /**
  * Finds all Departments in QuickBooks, optionally matching the specified criteria
@@ -1317,11 +1393,25 @@ QuickBooks.prototype.reportProfitAndLossDetail = promisify(QuickBooks.prototype.
 QuickBooks.prototype.reportTrialBalance = promisify(QuickBooks.prototype.reportTrialBalanceOld)
 
 /**
+ * Retrieves the TrialBalanceFR Report from QuickBooks
+ *
+ * @param  {object} options - (Optional) Map of key-value pairs passed as options to the Report
+ */
+QuickBooks.prototype.reportTrialBalanceFR = promisify(QuickBooks.prototype.reportTrialBalanceFROld)
+
+/**
  * Retrieves the CashFlow Report from QuickBooks
  *
  * @param  {object} options - (Optional) Map of key-value pairs passed as options to the Report
  */
 QuickBooks.prototype.reportCashFlow = promisify(QuickBooks.prototype.reportCashFlowOld)
+
+/**
+ * Retrieves the InventoryValuationSummary Report from QuickBooks
+ *
+ * @param  {object} options - (Optional) Map of key-value pairs passed as options to the Report
+ */
+QuickBooks.prototype.reportInventoryValuationSummary = promisify(QuickBooks.prototype.reportInventoryValuationSummaryOld)
 
 /**
  * Retrieves the CustomerSales Report from QuickBooks
@@ -1448,6 +1538,13 @@ QuickBooks.prototype.reportClassSales = promisify(QuickBooks.prototype.reportCla
  * @param  {object} options - (Optional) Map of key-value pairs passed as options to the Report
  */
 QuickBooks.prototype.reportAccountListDetail = promisify(QuickBooks.prototype.reportAccountListDetailOld)
+
+/**
+ * Retrieves the JournalReport Report from QuickBooks
+ *
+ * @param  {object} options - (Optional) Map of key-value pairs passed as options to the Report
+ */
+QuickBooks.prototype.reportJournalReport = promisify(QuickBooks.prototype.reportJournalReportOld)
 
 
 QuickBooks.prototype.reconnect = promisify(QuickBooks.prototype.reconnectOld)
